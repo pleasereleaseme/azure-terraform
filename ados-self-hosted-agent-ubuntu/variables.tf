@@ -6,7 +6,7 @@ variable "node_count" {
 
 variable "base_name" {
   description = "Enter a base name for the resources that will be created"
-  default     = "ados-private-agent-ubuntu"
+  default     = "ados-self-hosted-agent-ubuntu"
 }
 
 variable "resource_group_location" {
@@ -29,7 +29,7 @@ variable "tags" {
   type        = "map"
 
   default = {
-    label = "ados-private-agent-ubuntu"
+    label = "ados-self-hosted-agent-ubuntu"
   }
 }
 
