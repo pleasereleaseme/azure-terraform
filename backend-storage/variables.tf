@@ -7,7 +7,7 @@ variable "resource_group_location" {
   description = "Enter the location for the resource group"
   default     = "eastus"
 }
-variable "storage_acount" {
+variable "storage_account" {
   description = "Enter the name of the storage account"
   default     = "terraformbackendprm"
 }
