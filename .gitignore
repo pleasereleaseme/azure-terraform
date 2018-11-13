@@ -7,3 +7,6 @@
 
 # .tfvars files
 *.tfvars
+
+# cloud-init.txt contains secrets
+/ados-private-agent-ubuntu/cloud-init.txt
