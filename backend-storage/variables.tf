@@ -15,3 +15,12 @@ variable "storage_container" {
   description = "Enter the name of the storage container"
   default     = "terraformstate"
 }
+
+variable "tags" {
+  description = "A map of the tags to use for the resources that are deployed"
+  type        = "map"
+
+  default = {
+    CreatedBy =  "Terraform"
+  }
+}

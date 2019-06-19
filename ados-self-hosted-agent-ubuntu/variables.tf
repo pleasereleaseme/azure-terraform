@@ -16,7 +16,7 @@ variable "resource_group_location" {
 
 variable "vm_size" {
   description = "Enter a name for the VM size"
-  default     = "Standard_DS1_v2"
+  default     = "Standard_D2s_v3"
 }
 
 variable "ubuntu_sdk" {
@@ -29,7 +29,8 @@ variable "tags" {
   type        = "map"
 
   default = {
-    label = "ados-self-hosted-agent-ubuntu"
+    label     = "ados-self-hosted-agent-ubuntu"
+    CreatedBy = "Terraform"
   }
 }
 

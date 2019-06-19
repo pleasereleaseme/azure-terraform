@@ -1,6 +1,7 @@
 resource "azurerm_resource_group" "resource_group" {
   name     = "${var.resource_group}"
   location = "${var.resource_group_location}"
+  tags     = "${merge(map("CreatedDate", "${substr(timestamp(), 0, 10)}"),var.tags)}"
 }
 
 resource "azurerm_storage_account" "storage_account" {
@@ -11,6 +12,7 @@ resource "azurerm_storage_account" "storage_account" {
   account_replication_type = "RAGRS"
   account_kind             = "StorageV2"
   access_tier              = "hot"
+  tags                     = "${merge(map("CreatedDate", "${substr(timestamp(), 0, 10)}"),var.tags)}"
 }
 
 resource "azurerm_storage_container" "storage_container" {

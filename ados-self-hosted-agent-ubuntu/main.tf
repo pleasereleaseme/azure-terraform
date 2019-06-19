@@ -14,7 +14,7 @@ provider "azurerm" {
 resource "azurerm_resource_group" "resource_group" {
   name     = "${var.base_name}-${var.environment}-rg"
   location = "${var.resource_group_location}"
-  tags     = "${var.tags}"
+  tags     = "${merge(map("CreatedDate", "${substr(timestamp(), 0, 10)}"),var.tags)}"
 }
 
 # Create virtual network
@@ -23,7 +23,7 @@ resource "azurerm_virtual_network" "virtual_network" {
   address_space       = ["10.0.0.0/16"]
   location            = "${var.resource_group_location}"
   resource_group_name = "${azurerm_resource_group.resource_group.name}"
-  tags                = "${var.tags}"
+  tags                = "${merge(map("CreatedDate", "${substr(timestamp(), 0, 10)}"),var.tags)}"
 }
 
 # Create subnet
@@ -39,10 +39,10 @@ resource "azurerm_public_ip" "public_ip" {
   name                         = "${var.base_name}-public-ip-${count.index}"
   location                     = "${var.resource_group_location}"
   resource_group_name          = "${azurerm_resource_group.resource_group.name}"
-  public_ip_address_allocation = "dynamic"
+  allocation_method            = "Dynamic"
   domain_name_label            = "${var.base_name}-${var.environment}-${count.index}"
   count                        = "${var.node_count}"
-  tags                         = "${var.tags}"
+  tags                         = "${merge(map("CreatedDate", "${substr(timestamp(), 0, 10)}"),var.tags)}"
 }
 
 # Create Network Security Group and rule
@@ -63,7 +63,7 @@ resource "azurerm_network_security_group" "network_security_group" {
     destination_address_prefix = "*"
   }
 
-  tags = "${var.tags}"
+  tags     = "${merge(map("CreatedDate", "${substr(timestamp(), 0, 10)}"),var.tags)}"
 }
 
 # Create network interface
@@ -73,7 +73,7 @@ resource "azurerm_network_interface" "network_interface" {
   resource_group_name       = "${azurerm_resource_group.resource_group.name}"
   network_security_group_id = "${azurerm_network_security_group.network_security_group.id}"
   count                     = "${var.node_count}"
-  tags                      = "${var.tags}"
+  tags                      = "${merge(map("CreatedDate", "${substr(timestamp(), 0, 10)}"),var.tags)}"
 
   ip_configuration {
     name                          = "${var.base_name}-ip-config"
@@ -92,6 +92,7 @@ resource "azurerm_virtual_machine" "virtual_machine" {
   vm_size                       = "${var.vm_size}"
   delete_os_disk_on_termination = true
   count                         = "${var.node_count}"
+  tags                          = "${merge(map("CreatedDate", "${substr(timestamp(), 0, 10)}"),var.tags)}"
 
   storage_os_disk {
     name              = "${var.base_name}-os-disk-${count.index}"
